@@ -55,12 +55,15 @@ function renderEvidenceTable(items) {
     return;
   }
 
-  tbody.innerHTML = items.map(item => `
+  tbody.innerHTML = items.map(item => {
+    const rawTime = item.created_at || '2026-07-20 16:37:12';
+    const formattedTime = formatUtcToLocal(rawTime);
+    return `
     <tr>
       <td><strong>${escapeHtml(item.title || "Evidence item")}</strong></td>
       <td><span class="badge ${item.file_type === 'image' ? 'badge-primary' : 'badge-warning'}">${item.file_type || 'Media'}</span></td>
       <td><span style="font-size:0.85rem;">📍 ${item.latitude ? (item.latitude + ', ' + item.longitude) : '12.9716, 77.5946'}</span></td>
-      <td><span style="font-size:0.85rem;">🕒 ${(item.created_at || '2026-07-20 16:37:12').substring(0, 19)}</span></td>
+      <td><span style="font-size:0.85rem;">🕒 ${formattedTime}</span></td>
       <td><code class="hash-code">🔑 ${(item.file_hash || 'SHA-256 Verified').substring(0, 16)}...</code></td>
       <td>
         <span class="badge ${item.tamper_status === 'tampered' ? 'badge-danger' : 'badge-success'}">
@@ -69,7 +72,8 @@ function renderEvidenceTable(items) {
       </td>
       <td><button onclick="verifyItem('${item.id}')" class="btn btn-secondary" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">Verify Integrity</button></td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function renderDemoEvidence() {
@@ -133,3 +137,24 @@ function showToast(message, type = "info") {
     toast.remove();
   }, 4000);
 }
+
+function formatUtcToLocal(utcString) {
+  if (!utcString) return "";
+  let isoString = utcString.trim().replace(" ", "T");
+  if (!isoString.endsWith("Z") && !isoString.includes("+") && !isoString.includes("-", 10)) {
+    isoString += "Z";
+  }
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) {
+    return utcString;
+  }
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+}
+

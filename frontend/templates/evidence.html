@@ -24,68 +24,10 @@
       object-fit: cover;
       border: 1px solid var(--glass-border);
     }
-    .metadata-pill-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 1rem;
-      padding: 0.85rem;
-      background: rgba(10, 13, 20, 0.6);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--glass-border);
-      font-size: 0.85rem;
-    }
-    .meta-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.25rem 0.65rem;
-      border-radius: var(--radius-full);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-main);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .meta-pill:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.2);
-    }
-    .meta-pill.primary { border-color: var(--color-primary); color: var(--color-primary); }
-    .meta-pill.success { border-color: var(--color-success); color: var(--color-success); }
-    .meta-pill.warning { border-color: var(--color-warning); color: var(--color-warning); }
-
-    /* Modals Overlay */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(10, 13, 20, 0.85);
-      backdrop-filter: blur(12px);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-    .modal-overlay.active {
-      display: flex;
-    }
-    .modal-content {
-      background: var(--bg-card);
-      border: 1px solid rgba(0, 229, 255, 0.3);
-      border-radius: var(--radius-lg);
-      max-width: 680px;
-      width: 100%;
-      padding: 2rem;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
-    }
     .map-frame-container {
       width: 100%;
       height: 360px;
-      background: #000;
+      background: #f8fafc;
       border-radius: var(--radius-md);
       margin: 1.25rem 0;
       border: 1px solid var(--glass-border);
@@ -102,7 +44,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(10, 13, 20, 0.8);
+      background: rgba(15, 23, 42, 0.05);
       border-radius: var(--radius-md);
       margin: 1.25rem 0;
       border: 1px solid var(--glass-border);
@@ -488,7 +430,25 @@
       tbody.innerHTML = items.map((item) => {
         const itemLat = item.latitude ? parseFloat(item.latitude).toFixed(5) : parseFloat(activeLat).toFixed(5);
         const itemLng = item.longitude ? parseFloat(item.longitude).toFixed(5) : parseFloat(activeLng).toFixed(5);
-        const timestamp = item.created_at ? new Date(item.created_at).toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }) : getPresentLocalTimeFormatted();
+        
+        let timestamp = getPresentLocalTimeFormatted();
+        if (item.created_at) {
+          let isoString = item.created_at.trim().replace(" ", "T");
+          if (!isoString.endsWith("Z") && !isoString.includes("+") && !isoString.includes("-", 10)) {
+            isoString += "Z";
+          }
+          const parsedDate = new Date(isoString);
+          if (!isNaN(parsedDate.getTime())) {
+            timestamp = parsedDate.toLocaleString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: true
+            });
+          }
+        }
 
         return `
           <tr>
