@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Incident Reports | AI Evidence Protector</title>
+  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/report.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="../public/logo.png" alt="AI Evidence Logo">
+      <span>AI Evidence Protector</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+      <li><a href="evidence.html" class="nav-link">Evidence Vault</a></li>
+      <li><a href="report.html" class="nav-link active">Reports</a></li>
+      <li><a href="emergency.html" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
+    </ul>
+  </nav>
+
+  <!-- Report Generator Screen -->
+  <main class="main-container">
+    <div class="report-header">
+      <h2>Cryptographic Incident Report Generator</h2>
+      <p style="color: var(--text-muted);">Compile legal PDF incident dossiers linking secured evidence hashes and verification signatures.</p>
+    </div>
+
+    <div class="report-form-grid">
+      <!-- Report Form -->
+      <div class="glass-card">
+        <h3 style="margin-bottom: 1.5rem;">📄 Create New PDF Report</h3>
+        <form id="report-form">
+          <div class="form-group">
+            <label class="form-label">Report Title</label>
+            <input type="text" id="report-title" class="form-input" placeholder="e.g. Official Security Incident Report #2026-A" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Incident Description & Notes</label>
+            <textarea id="report-description" class="form-input" rows="5" placeholder="Detailed chronological breakdown of the event, location context, and security observations..." required style="resize: vertical;"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; margin-top: 1rem;">
+            Generate Official PDF Report
+          </button>
+        </form>
+      </div>
+
+      <!-- Report Sidebar -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="report-summary-card">
+          <h4 style="color: var(--color-primary); margin-bottom: 0.5rem;">⚖️ Legal Verification</h4>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">
+            Generated reports automatically append cryptographic signatures, timestamp chains, and AI tamper-integrity certificates suitable for legal proceedings.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generated Reports History -->
+    <div style="margin-top: 3rem;">
+      <h3 style="margin-bottom: 1.5rem;">Archive of Generated PDF Reports</h3>
+      <div id="report-history-list">
+        <!-- Dynamically appended by report.js -->
+      </div>
+    </div>
+  </main>
+
+  <script src="../static/js/report.js"></script>
+</body>
+</html>

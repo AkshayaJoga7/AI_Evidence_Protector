@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile & Security Settings | AI Evidence Protector</title>
+  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/login.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="../public/logo.png" alt="AI Evidence Logo">
+      <span>AI Evidence Protector</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+      <li><a href="evidence.html" class="nav-link">Evidence Vault</a></li>
+      <li><a href="profile.html" class="nav-link active">Profile</a></li>
+      <li><a href="emergency.html" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
+    </ul>
+  </nav>
+
+  <!-- User Profile Settings Container -->
+  <main class="main-container">
+    <div style="max-width: 680px; margin: 0 auto;">
+      <div class="glass-card">
+        <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1.5rem;">
+          <div style="width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: #fff;">
+            A
+          </div>
+          <div>
+            <h2 id="profile-name">Agent Account Profile</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" id="profile-email">agent@evidence.sec</p>
+            <span class="badge badge-success" style="margin-top: 0.4rem;">Encrypted Storage Active</span>
+          </div>
+        </div>
+
+        <form id="profile-form">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="prof-fullname" class="form-input" value="Security Officer / Agent">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Emergency SOS Phone Contacts</label>
+            <input type="text" id="prof-phone" class="form-input" value="+1 (555) 019-2831, +1 (555) 948-2019">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Cryptographic Verification Key</label>
+            <input type="text" class="form-input" value="0x8F4A2...C91B4" readonly style="color: var(--color-primary); font-family: monospace;">
+          </div>
+
+          <button type="button" class="btn btn-primary" onclick="alert('Profile security configuration updated successfully!')" style="width: 100%; margin-top: 1rem;">
+            Save Security Settings
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("username");
+      const email = localStorage.getItem("email");
+      if (username) document.getElementById("profile-name").innerText = username;
+      if (email) document.getElementById("profile-email").innerText = email;
+    });
+  </script>
+</body>
+</html>

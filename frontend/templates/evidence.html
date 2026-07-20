@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Vault & Live Capture | AI Evidence Protector</title>
+  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <style>
+    .capture-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 768px) {
+      .capture-grid { grid-template-columns: 1fr; }
+    }
+    .video-preview {
+      width: 100%;
+      height: 240px;
+      background: #000;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      border: 1px solid var(--glass-border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="../public/logo.png" alt="AI Evidence Logo">
+      <span>AI Evidence Protector</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+      <li><a href="evidence.html" class="nav-link active">Evidence Vault</a></li>
+      <li><a href="report.html" class="nav-link">Reports</a></li>
+      <li><a href="emergency.html" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
+    </ul>
+  </nav>
+
+  <!-- Evidence Capture & Upload Page -->
+  <main class="main-container">
+    <div style="margin-bottom: 2rem;">
+      <h2>Evidence Capture & Secure Upload Vault</h2>
+      <p style="color: var(--text-muted);">Capture camera snapshots or audio recordings directly, or upload evidence files for SHA-256 signature hashing.</p>
+    </div>
+
+    <!-- Live Media Capture Cards -->
+    <div class="capture-grid">
+      <!-- Camera Snap Card -->
+      <div class="glass-card">
+        <h3 style="margin-bottom: 1rem;">📷 Camera Snapshot Capture</h3>
+        <video id="webcam-video" class="video-preview" autoplay playsinline muted></video>
+        <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+          <button id="start-cam-btn" class="btn btn-secondary">Start Camera</button>
+          <button id="snap-photo-btn" class="btn btn-primary">Take Photo Evidence</button>
+        </div>
+      </div>
+
+      <!-- Audio Recorder Card -->
+      <div class="glass-card">
+        <h3 style="margin-bottom: 1rem;">🎙️ Microphone Audio Capture</h3>
+        <div style="height: 240px; background: rgba(10, 13, 20, 0.6); border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+          <div id="audio-status" style="font-size: 1.1rem; color: var(--color-primary);">Microphone Standby</div>
+          <audio id="audio-preview" controls style="display: none; width: 80%;"></audio>
+        </div>
+        <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+          <button id="start-audio-btn" class="btn btn-secondary">Start Recording</button>
+          <button id="stop-audio-btn" class="btn btn-primary" disabled>Stop & Save Audio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Upload Form Card -->
+    <div class="glass-card">
+      <h3 style="margin-bottom: 1.5rem;">📁 Manual File Upload to Cryptographic Vault</h3>
+      <form id="upload-evidence-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div style="grid-column: span 2;">
+          <label class="form-label">Evidence Title / Description</label>
+          <input type="text" id="evidence-title" class="form-input" placeholder="e.g. Surveillance Photo #4" required>
+        </div>
+
+        <div>
+          <label class="form-label">Media Type</label>
+          <select id="evidence-type" class="form-input">
+            <option value="image">Image (JPG, PNG, WEBP)</option>
+            <option value="audio">Audio (WAV, MP3, OGG)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="form-label">Select File</label>
+          <input type="file" id="evidence-file" class="form-input" required>
+        </div>
+
+        <div style="grid-column: span 2; margin-top: 0.5rem;">
+          <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem;">
+            🔒 Upload & Compute Cryptographic Hash Signature
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="../static/js/location.js"></script>
+  <script src="../static/js/camera.js"></script>
+  <script src="../static/js/audio.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const camera = new CameraService("webcam-video");
+      const audioRecorder = new AudioRecorderService();
+
+      document.getElementById("start-cam-btn").addEventListener("click", () => {
+        camera.startCamera().then(() => alert("Camera active!"));
+      });
+
+      document.getElementById("snap-photo-btn").addEventListener("click", async () => {
+        const snap = await camera.takeSnapshot();
+        if (snap) alert("Photo snapshot captured! Filename: " + snap.file.name);
+      });
+
+      document.getElementById("start-audio-btn").addEventListener("click", async () => {
+        await audioRecorder.startRecording();
+        document.getElementById("audio-status").innerText = "🔴 Recording Audio Stream...";
+        document.getElementById("stop-audio-btn").disabled = false;
+      });
+
+      document.getElementById("stop-audio-btn").addEventListener("click", async () => {
+        const result = await audioRecorder.stopRecording();
+        if (result) {
+          document.getElementById("audio-status").innerText = "✓ Audio Recorded";
+          const player = document.getElementById("audio-preview");
+          player.src = result.audioUrl;
+          player.style.display = "block";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* Report Generation & View Layout */
+.report-header {
+  margin-bottom: 2rem;
+}
+
+.report-form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .report-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.evidence-selector-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  background: rgba(10, 13, 20, 0.4);
+}
+
+.selector-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.selector-item:last-child {
+  border-bottom: none;
+}
+
+.report-summary-card {
+  background: linear-gradient(135deg, rgba(124, 77, 255, 0.1), rgba(0, 229, 255, 0.05));
+  border: 1px solid rgba(124, 77, 255, 0.3);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+}
+
+.pdf-icon {
+  font-size: 2.5rem;
+  color: var(--color-danger);
+}

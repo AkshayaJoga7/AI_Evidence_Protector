@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | AI Evidence Protector</title>
+  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="../public/logo.png" alt="AI Evidence Logo">
+      <span>AI Evidence Protector</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+      <li><a href="evidence.html" class="nav-link">Evidence Vault</a></li>
+      <li><a href="report.html" class="nav-link">Reports</a></li>
+      <li><a href="profile.html" class="nav-link">Profile</a></li>
+      <li><a href="emergency.html" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
+    </ul>
+  </nav>
+
+  <!-- Dashboard Main Content -->
+  <main class="main-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h2>Security Dashboard</h2>
+        <p style="color: var(--text-muted);">Welcome back, <span id="nav-username" style="color: var(--color-primary); font-weight: 600;">Agent</span>. Active SHA-256 chain protection online.</p>
+      </div>
+      <div class="quick-actions">
+        <a href="evidence.html" class="btn btn-primary">➕ Add Evidence</a>
+        <a href="report.html" class="btn btn-secondary">📄 Generate PDF Report</a>
+      </div>
+    </div>
+
+    <!-- Stat Metrics Grid -->
+    <div class="dashboard-grid">
+      <div class="glass-card stat-card">
+        <div class="stat-icon">📁</div>
+        <div class="stat-info">
+          <div class="stat-value" id="total-evidence-count">0</div>
+          <div class="stat-label">Total Secured Files</div>
+        </div>
+      </div>
+
+      <div class="glass-card stat-card">
+        <div class="stat-icon purple">🛡️</div>
+        <div class="stat-info">
+          <div class="stat-value" id="authentic-count">0</div>
+          <div class="stat-label">Authentic Items</div>
+        </div>
+      </div>
+
+      <div class="glass-card stat-card">
+        <div class="stat-icon danger">⚠️</div>
+        <div class="stat-info">
+          <div class="stat-value" id="alert-count">0</div>
+          <div class="stat-label">Tamper Alerts Flagged</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secured Evidence Table -->
+    <div class="glass-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3>Recent Evidence Files</h3>
+        <span class="badge badge-success">Cryptographic Hash Sync Active</span>
+      </div>
+
+      <div class="evidence-table-container">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Filename / Title</th>
+              <th>Type</th>
+              <th>SHA-256 Signature</th>
+              <th>AI Tamper Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="evidence-table-body">
+            <!-- Dynamic rows inserted by dashboard.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="../static/js/dashboard.js"></script>
+</body>
+</html>

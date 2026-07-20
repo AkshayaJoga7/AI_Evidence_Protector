@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency SOS | AI Evidence Protector</title>
+  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/emergency.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="../public/logo.png" alt="AI Evidence Logo">
+      <span>AI Evidence Protector</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+      <li><a href="evidence.html" class="nav-link">Evidence Vault</a></li>
+      <li><a href="emergency.html" class="nav-link active sos-btn">🚨 SOS PANIC</a></li>
+    </ul>
+  </nav>
+
+  <!-- Emergency Dispatch Screen -->
+  <main class="main-container">
+    <div class="emergency-container">
+      <h1 style="font-size: 2.5rem; color: var(--color-danger);">Distress & Panic Trigger</h1>
+      <p style="color: var(--text-muted); max-width: 540px; margin-top: 0.5rem;">
+        Pressing the emergency button instantly captures your exact GPS location, timestamps the incident, and transmits distress signals.
+      </p>
+
+      <div class="sos-trigger-outer">
+        <div class="sos-pulse-ring"></div>
+        <button id="sos-trigger-btn" class="sos-trigger-btn">
+          <span>TRIGGER</span>
+          <span style="font-size: 1.25rem;">SOS NOW</span>
+        </button>
+      </div>
+
+      <div class="location-badge">
+        <div class="location-dot"></div>
+        <span id="location-display">Acquiring GPS Satellite Connection...</span>
+      </div>
+    </div>
+  </main>
+
+  <script src="../static/js/location.js"></script>
+  <script src="../static/js/emergency.js"></script>
+</body>
+</html>

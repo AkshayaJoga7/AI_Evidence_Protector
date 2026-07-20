@@ -1,0 +1,81 @@
+/* Emergency Panic Page Styling */
+.emergency-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: calc(100vh - 200px);
+}
+
+.sos-trigger-outer {
+  position: relative;
+  margin: 3rem 0;
+}
+
+.sos-trigger-btn {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff5252, #d50000);
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  box-shadow: 0 0 40px rgba(255, 23, 68, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.4);
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.sos-trigger-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 60px rgba(255, 23, 68, 0.9), inset 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.sos-trigger-btn:active {
+  transform: scale(0.95);
+}
+
+.sos-pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 2px solid var(--color-danger);
+  animation: ripple 2s infinite;
+  pointer-events: none;
+}
+
+.location-badge {
+  background: rgba(18, 24, 36, 0.8);
+  border: 1px solid var(--glass-border);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.location-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--color-success);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-success);
+}
+
+@keyframes ripple {
+  0% { width: 220px; height: 220px; opacity: 1; }
+  100% { width: 340px; height: 340px; opacity: 0; }
+}
