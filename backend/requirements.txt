@@ -4,3 +4,4 @@ python-dotenv==1.0.1
 Werkzeug==3.0.1
 requests==2.31.0
 firebase-admin==7.5.0
+gunicorn
