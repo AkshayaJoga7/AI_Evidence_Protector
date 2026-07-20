@@ -4,23 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile & Security Settings | AI Evidence Protector</title>
-  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../static/css/style.css">
-  <link rel="stylesheet" href="../static/css/login.css">
+  <link rel="shortcut icon" href="{{ url_for('views.favicon') }}" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
 
-  <!-- Navbar -->
+  <!-- Consistent Authenticated Navbar -->
   <nav class="navbar">
-    <a href="index.html" class="nav-brand">
-      <img src="../public/logo.png" alt="AI Evidence Logo">
+    <a href="{{ url_for('views.index') }}" class="nav-brand">
+      <img src="{{ url_for('views.logo') }}" alt="AI Evidence Logo">
       <span>AI Evidence Protector</span>
     </a>
     <ul class="nav-links">
-      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
-      <li><a href="evidence.html" class="nav-link">Evidence Vault</a></li>
-      <li><a href="profile.html" class="nav-link active">Profile</a></li>
-      <li><a href="emergency.html" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
+      <li><a href="{{ url_for('views.dashboard') }}" class="nav-link">Dashboard</a></li>
+      <li><a href="{{ url_for('views.evidence') }}" class="nav-link">Evidence Vault</a></li>
+      <li><a href="{{ url_for('views.report') }}" class="nav-link">Reports</a></li>
+      <li><a href="{{ url_for('views.profile') }}" class="nav-link active">Profile</a></li>
+      <li><a href="{{ url_for('views.emergency') }}" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
     </ul>
   </nav>
 
@@ -55,9 +56,16 @@
             <input type="text" class="form-input" value="0x8F4A2...C91B4" readonly style="color: var(--color-primary); font-family: monospace;">
           </div>
 
-          <button type="button" class="btn btn-primary" onclick="alert('Profile security configuration updated successfully!')" style="width: 100%; margin-top: 1rem;">
-            Save Security Settings
-          </button>
+          <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-primary" onclick="alert('Profile security configuration updated successfully!')" style="width: 100%;">
+              Save Security Settings
+            </button>
+            
+            <!-- Logout Button at bottom of Profile Page -->
+            <a href="{{ url_for('views.logout') }}" id="profile-logout-btn" class="btn btn-danger" style="width: 100%; text-align: center; text-decoration: none;">
+              🚪 Logout Account (Sign Out)
+            </a>
+          </div>
         </form>
       </div>
     </div>
@@ -69,6 +77,13 @@
       const email = localStorage.getItem("email");
       if (username) document.getElementById("profile-name").innerText = username;
       if (email) document.getElementById("profile-email").innerText = email;
+
+      const logoutBtn = document.getElementById("profile-logout-btn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          localStorage.clear();
+        });
+      }
     });
   </script>
 </body>

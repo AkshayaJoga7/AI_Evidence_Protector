@@ -5,25 +5,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard | AI Evidence Protector</title>
-  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../static/css/style.css">
-  <link rel="stylesheet" href="../static/css/dashboard.css">
+  <link rel="shortcut icon" href="{{ url_for('views.favicon') }}" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
 
 <body>
 
-  <!-- Navbar -->
+  <!-- Consistent Authenticated Navbar -->
   <nav class="navbar">
-    <a href="index.html" class="nav-brand">
-      <img src="../public/logo.png" alt="AI Evidence Logo">
+    <a href="{{ url_for('views.index') }}" class="nav-brand">
+      <img src="{{ url_for('views.logo') }}" alt="AI Evidence Logo">
       <span>AI Evidence Protector</span>
     </a>
     <ul class="nav-links">
-      <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
-      <li><a href="evidence.html" class="nav-link">Evidence Vault</a></li>
-      <li><a href="report.html" class="nav-link">Reports</a></li>
-      <li><a href="profile.html" class="nav-link">Profile</a></li>
-      <li><a href="emergency.html" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
+      <li><a href="{{ url_for('views.dashboard') }}" class="nav-link active">Dashboard</a></li>
+      <li><a href="{{ url_for('views.evidence') }}" class="nav-link">Evidence Vault</a></li>
+      <li><a href="{{ url_for('views.report') }}" class="nav-link">Reports</a></li>
+      <li><a href="{{ url_for('views.profile') }}" class="nav-link">Profile</a></li>
+      <li><a href="{{ url_for('views.emergency') }}" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
     </ul>
   </nav>
 
@@ -38,8 +38,8 @@
         </p>
       </div>
       <div class="quick-actions">
-        <a href="evidence.html" class="btn btn-primary">➕ Add Evidence</a>
-        <a href="report.html" class="btn btn-secondary">📄 Generate PDF Report</a>
+        <a href="{{ url_for('views.evidence') }}" class="btn btn-primary">➕ Add Evidence</a>
+        <a href="{{ url_for('views.report') }}" class="btn btn-secondary">📄 Generate PDF Report</a>
       </div>
     </div>
 
@@ -83,8 +83,10 @@
             <tr>
               <th>Filename / Title</th>
               <th>Type</th>
-              <th>SHA-256 Signature</th>
-              <th>AI Tamper Status</th>
+              <th>📍 GPS Location</th>
+              <th>🕒 Timestamp</th>
+              <th>🔑 SHA-256 Signature</th>
+              <th>🛡️ Evidence Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -96,7 +98,7 @@
     </div>
   </main>
 
-  <script src="../static/js/dashboard.js"></script>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
 
 </html>

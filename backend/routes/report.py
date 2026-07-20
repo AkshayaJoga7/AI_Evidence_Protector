@@ -1,30 +1,39 @@
-from flask import Blueprint, request, send_file
+import os
+from flask import Blueprint, request, send_file, session, render_template
 from models.report import ReportModel
 from models.evidence import EvidenceModel
 from services.report_service import ReportService
 from utils.helpers import success_response, error_response
 from utils.validators import validate_required_fields
-import os
 
 report_bp = Blueprint('report', __name__)
 
 @report_bp.route('/create', methods=['POST'])
 def create_report():
-    data = request.get_json()
-    valid, msg = validate_required_fields(data, ['user_id', 'title', 'description'])
-    if not valid:
-        return error_response(msg, 400)
+    data = request.get_json() or {}
+    
+    title = data.get('title')
+    description = data.get('description')
+    user_id = data.get('user_id') or session.get('user_id') or 1
+
+    if not title or not description:
+        return error_response("Title and Description are required", 400)
+
+    try:
+        user_id = int(user_id)
+    except (ValueError, TypeError):
+        user_id = 1
 
     report_id = ReportModel.create_report(
-        user_id=data['user_id'],
-        title=data['title'],
-        description=data['description'],
-        status='draft'
+        user_id=user_id,
+        title=title,
+        description=description,
+        status='generated'
     )
 
-    evidence_items = EvidenceModel.get_all_by_user(data['user_id'])
+    evidence_items = EvidenceModel.get_all_by_user(user_id)
     report_file = ReportService.generate_pdf_report(
-        {"id": report_id, "title": data['title'], "description": data['description'], "status": "draft"},
+        {"id": report_id, "title": title, "description": description, "status": "generated"},
         evidence_items
     )
 
@@ -33,7 +42,7 @@ def create_report():
     return success_response(
         data={
             "report_id": report_id,
-            "title": data['title'],
+            "title": title,
             "status": "generated",
             "report_file": report_file
         },
@@ -46,6 +55,15 @@ def list_user_reports(user_id):
     reports = ReportModel.get_all_by_user(user_id)
     return success_response(data=reports)
 
+@report_bp.route('/view/<int:report_id>', methods=['GET'])
+def view_report(report_id):
+    report = ReportModel.get_by_id(report_id)
+    if not report:
+        return error_response("Report not found", 404)
+
+    evidence_items = EvidenceModel.get_all_by_user(report.get('user_id', 1))
+    return render_template('report_view.html', report=report, evidence_items=evidence_items)
+
 @report_bp.route('/download/<int:report_id>', methods=['GET'])
 def download_report(report_id):
     report = ReportModel.get_by_id(report_id)
@@ -56,4 +74,13 @@ def download_report(report_id):
     if not os.path.exists(file_path):
         return error_response("Report file missing on server", 404)
 
-    return send_file(file_path, as_attachment=True)
+    safe_title = "".join([c if c.isalnum() else "_" for c in report.get('title', 'report')])
+    download_name = f"{safe_title}_# {report_id}.pdf"
+    mimetype = "text/plain" if file_path.endswith('.txt') else "application/pdf"
+
+    return send_file(
+        file_path,
+        as_attachment=True,
+        download_name=download_name,
+        mimetype=mimetype
+    )

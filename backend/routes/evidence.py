@@ -1,4 +1,5 @@
-from flask import Blueprint, request
+import os
+from flask import Blueprint, request, send_file
 from models.evidence import EvidenceModel
 from services.storage_service import StorageService
 from services.ai_service import AIService
@@ -73,3 +74,15 @@ def get_evidence(evidence_id):
     if not item:
         return error_response("Evidence item not found", 404)
     return success_response(data=item)
+
+@evidence_bp.route('/file/<int:evidence_id>', methods=['GET'])
+def get_evidence_file(evidence_id):
+    item = EvidenceModel.get_by_id(evidence_id)
+    if not item or not item.get('file_path'):
+        return error_response("Evidence file not found", 404)
+
+    file_path = item['file_path']
+    if not os.path.exists(file_path):
+        return error_response("File missing on server", 404)
+
+    return send_file(file_path)

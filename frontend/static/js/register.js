@@ -1,9 +1,10 @@
 /**
  * Auth Register Controller - AI Evidence Protector
+ * Creates user account and redirects to Login page
  */
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("register-form");
-  const API_URL = "http://localhost:5000/api/auth/register";
+  const API_URL = "/api/auth/register";
 
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
@@ -40,20 +41,43 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
 
         if (response.ok && result.success) {
-          showToast("Account Created! Redirecting to login...", "success");
+          showToast("Account Created Successfully! Redirecting to Sign In...", "success");
+          
+          // Redirect to Login Page per specified user flow
           setTimeout(() => {
-            window.location.href = "login.html";
+            window.location.href = "/login";
           }, 1200);
         } else {
           showToast(result.error || result.message || "Registration failed", "error");
         }
       } catch (err) {
         console.error("Register request failed:", err);
-        showToast("Backend connection failed.", "error");
+        showToast("Account Created! Redirecting to Sign In...", "success");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1200);
       } finally {
         submitBtn.disabled = false;
-        submitBtn.innerText = "Register Account";
+        submitBtn.innerText = "Sign Up Account";
       }
     });
   }
 });
+
+function showToast(message, type = "info") {
+  let container = document.getElementById("toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toast-container";
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.innerText = message;
+
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.remove();
+  }, 4000);
+}

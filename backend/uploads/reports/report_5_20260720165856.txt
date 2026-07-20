@@ -1,0 +1,38 @@
+==================================================
+AI EVIDENCE PROTECTOR - OFFICIAL INCIDENT REPORT
+==================================================
+Report ID: 5
+Title: theft happend
+Generated At: 2026-07-20T11:28:56.943007 UTC
+Status: generated
+
+INCIDENT DESCRIPTION:
+---------------------
+at night 12 clock a theft had happened
+
+ATTACHED EVIDENCE (3 item(s)):
+---------------------
+
+[1] Title: Camera Photo Capture
+    Type: image
+    SHA-256 Hash: 2d9ad5a6cae316e33b84cd2a607b038fc705c52bc6f0d92162a4e44437bfb199
+    Location: Lat 16.811310499999998, Long 82.240162
+    Tamper Status: verified_authentic
+    AI Notes: AI Integrity Check Passed: No digital tampering detected. File hash matches original capture timestamp.
+
+[2] Title: Microphone Audio Recording
+    Type: audio
+    SHA-256 Hash: e945638a6065318a22d1703762630ae698a15533c61b056b5fa16f15d10d62d2
+    Location: Lat None, Long None
+    Tamper Status: verified_authentic
+    AI Notes: AI Integrity Check Passed: No digital tampering detected. File hash matches original capture timestamp.
+
+[3] Title: Camera Photo Capture
+    Type: image
+    SHA-256 Hash: 04e9e91b40491752e079d8bcfcb6ffa3cf025065ecdac198e7f628afbda6831b
+    Location: Lat None, Long None
+    Tamper Status: verified_authentic
+    AI Notes: AI Integrity Check Passed: No digital tampering detected. File hash matches original capture timestamp.
+
+==================================================
+END OF REPORT
