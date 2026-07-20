@@ -1,0 +1,17 @@
+==================================================
+AI EVIDENCE PROTECTOR - OFFICIAL INCIDENT REPORT
+==================================================
+Report ID: 1
+Title: accident
+Generated At: 2026-07-20T10:49:55.065845 UTC
+Status: draft
+
+INCIDENT DESCRIPTION:
+---------------------
+bike and car crashed
+
+ATTACHED EVIDENCE (0 item(s)):
+---------------------
+
+==================================================
+END OF REPORT

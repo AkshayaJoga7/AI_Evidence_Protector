@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, session
 from models.user import UserModel
 from utils.security import hash_password, verify_password, generate_api_token
 from utils.helpers import success_response, error_response
@@ -34,7 +34,7 @@ def register():
     token = generate_api_token()
     return success_response(
         data={"user_id": user_id, "username": data['username'], "token": token},
-        message="User registered successfully",
+        message="User registered successfully! Please log in.",
         status_code=201
     )
 
@@ -50,6 +50,12 @@ def login():
         return error_response("Invalid email or password", 401)
 
     token = generate_api_token()
+
+    # Populate Flask encrypted session
+    session['user_id'] = user['id']
+    session['username'] = user['username']
+    session['email'] = user['email']
+
     return success_response(
         data={
             "user_id": user['id'],
@@ -59,3 +65,8 @@ def login():
         },
         message="Login successful"
     )
+
+@auth_bp.route('/logout', methods=['POST', 'GET'])
+def logout():
+    session.clear()
+    return success_response(message="Logged out successfully")

@@ -1,0 +1,17 @@
+==================================================
+AI EVIDENCE PROTECTOR - OFFICIAL INCIDENT REPORT
+==================================================
+Report ID: 2
+Title: Test Incident
+Generated At: 2026-07-20T10:56:21.327368 UTC
+Status: draft
+
+INCIDENT DESCRIPTION:
+---------------------
+Testing PDF generation
+
+ATTACHED EVIDENCE (0 item(s)):
+---------------------
+
+==================================================
+END OF REPORT

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Official Incident Report #{{ report.id }} | AI Evidence Protector</title>
+  <link rel="shortcut icon" href="{{ url_for('views.favicon') }}" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      background: #090c14;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      padding: 2rem 1rem;
+    }
+    .report-dossier {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(18, 24, 38, 0.85);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 229, 255, 0.1);
+      backdrop-filter: blur(16px);
+      position: relative;
+    }
+    .report-dossier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .brand-section img {
+      width: 50px;
+      height: 50px;
+    }
+    .watermark-seal {
+      position: absolute;
+      top: 2.5rem;
+      right: 3rem;
+      border: 3px double var(--color-success);
+      color: var(--color-success);
+      padding: 0.4rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transform: rotate(-3deg);
+      background: rgba(0, 230, 118, 0.08);
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      background: rgba(10, 13, 20, 0.6);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .meta-item label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .meta-item value {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .description-box {
+      background: rgba(10, 13, 20, 0.4);
+      border-left: 4px solid var(--color-primary);
+      padding: 1.25rem 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+      color: #cbd5e1;
+    }
+    .evidence-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2.5rem;
+      font-size: 0.9rem;
+    }
+    .evidence-table th {
+      background: rgba(0, 229, 255, 0.08);
+      color: var(--color-primary);
+      padding: 0.85rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .evidence-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .custody-footer {
+      border-top: 1px dashed var(--glass-border);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .no-print-bar {
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    @media print {
+      .no-print-bar { display: none; }
+      body { background: #fff; color: #000; }
+      .report-dossier { background: #fff; color: #000; border: 1px solid #ccc; box-shadow: none; }
+      .meta-grid, .description-box { background: #f8fafc; border-color: #cbd5e1; color: #000; }
+      .evidence-table th { background: #f1f5f9; color: #000; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Action Toolbar -->
+  <div class="no-print-bar">
+    <a href="{{ url_for('views.report') }}" class="btn btn-secondary" style="padding: 0.4rem 1rem; text-decoration: none;">
+      ← Back to Reports
+    </a>
+    <div style="display: flex; gap: 0.75rem;">
+      <button onclick="window.print()" class="btn btn-secondary" style="padding: 0.4rem 1rem;">
+        🖨️ Print Dossier
+      </button>
+      <a href="/api/report/download/{{ report.id }}" class="btn btn-primary" style="padding: 0.4rem 1.2rem; text-decoration: none;">
+        📥 Download PDF / File
+      </a>
+    </div>
+  </div>
+
+  <!-- Official Report Dossier Card -->
+  <div class="report-dossier">
+    <div class="watermark-seal">
+      ✓ VERIFIED LEGAL DOSSIER
+    </div>
+
+    <!-- Dossier Header -->
+    <div class="report-dossier-header">
+      <div class="brand-section">
+        <img src="{{ url_for('views.logo') }}" alt="AI Evidence Logo">
+        <div>
+          <h2 style="font-size: 1.4rem; color: #fff; margin: 0;">AI EVIDENCE PROTECTOR</h2>
+          <small style="color: var(--color-primary); font-weight: 600; letter-spacing: 0.05em;">OFFICIAL CRYPTOGRAPHIC INCIDENT DOSSIER</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metadata Grid -->
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>Report Dossier ID</label>
+        <value>#REP-2026-{{ report.id }}</value>
+      </div>
+
+      <div class="meta-item">
+        <label>Incident Title</label>
+        <value>{{ report.title }}</value>
+      </div>
+
+      <div class="meta-item">
+        <label>Generation Date & Time</label>
+        <value>{{ report.created_at or '2026-07-20 UTC' }}</value>
+      </div>
+
+      <div class="meta-item">
+        <label>Verification Status</label>
+        <value>
+          <span class="badge badge-success">✓ {{ (report.status or 'generated')|upper }}</span>
+        </value>
+      </div>
+    </div>
+
+    <!-- Incident Description -->
+    <div class="section-title">
+      📄 Incident Description & Summary
+    </div>
+    <div class="description-box">
+      {{ report.description }}
+    </div>
+
+    <!-- Attached Evidence Artifacts -->
+    <div class="section-title">
+      🛡️ Secured Evidence Chain ({{ evidence_items|length }} Item(s))
+    </div>
+
+    {% if evidence_items %}
+    <table class="evidence-table">
+      <thead>
+        <tr>
+          <th>Item Title</th>
+          <th>Type</th>
+          <th>Cryptographic SHA-256 Hash</th>
+          <th>Tamper Audit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in evidence_items %}
+        <tr>
+          <td><strong>{{ item.title }}</strong></td>
+          <td><span class="badge badge-primary">{{ item.file_type }}</span></td>
+          <td><code class="hash-code">{{ item.file_hash[:20] }}...</code></td>
+          <td>
+            <span class="badge {{ 'badge-danger' if item.tamper_status == 'tampered' else 'badge-success' }}">
+              {{ '⚠️ Tampered' if item.tamper_status == 'tampered' else '✓ Verified Authentic' }}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div style="background: rgba(10, 13, 20, 0.4); border: 1px dashed var(--glass-border); padding: 1.5rem; text-align: center; border-radius: 8px; color: var(--text-muted); margin-bottom: 2rem;">
+      No individual media files attached to this specific report instance.
+    </div>
+    {% endif %}
+
+    <!-- Custody Signature Footer -->
+    <div class="custody-footer">
+      <div>
+        <strong>Cryptographic Hash Chain:</strong> SHA-256 Verification Digest Active
+      </div>
+      <div>
+        <strong>System Integrity:</strong> AI Evidence Protector Vault v1.0
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

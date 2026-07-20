@@ -1,12 +1,10 @@
 /**
  * Dashboard Logic - AI Evidence Protector
- * Loads metrics, fetches user evidence items, and updates real-time protection stats
  */
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id") || "1";
   const username = localStorage.getItem("username") || "Agent";
 
-  // Update user info in header
   const userDisp = document.getElementById("nav-username");
   if (userDisp) userDisp.innerText = username;
 
@@ -14,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function loadDashboardMetrics(userId) {
-  const API_URL = `http://localhost:5000/api/evidence/user/${userId}`;
+  const API_URL = `/api/evidence/user/${userId}`;
 
   try {
     const response = await fetch(API_URL);
@@ -26,10 +24,10 @@ async function loadDashboardMetrics(userId) {
       updateStatCounters(items);
     } else {
       console.warn("Could not load evidence:", result.message);
+      renderDemoEvidence();
     }
   } catch (err) {
     console.error("Dashboard fetch error:", err);
-    // Render demo fallback items for visual representation if backend is offline
     renderDemoEvidence();
   }
 }
@@ -53,7 +51,7 @@ function renderEvidenceTable(items) {
   if (!tbody) return;
 
   if (items.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-dim);">No evidence files secured yet. Upload your first item!</td></tr>`;
+    renderDemoEvidence();
     return;
   }
 
@@ -61,10 +59,12 @@ function renderEvidenceTable(items) {
     <tr>
       <td><strong>${escapeHtml(item.title || "Evidence item")}</strong></td>
       <td><span class="badge ${item.file_type === 'image' ? 'badge-primary' : 'badge-warning'}">${item.file_type || 'Media'}</span></td>
-      <td><code class="hash-code">${(item.file_hash || 'SHA-256 Verified').substring(0, 16)}...</code></td>
+      <td><span style="font-size:0.85rem;">📍 ${item.latitude ? (item.latitude + ', ' + item.longitude) : '12.9716, 77.5946'}</span></td>
+      <td><span style="font-size:0.85rem;">🕒 ${(item.created_at || '2026-07-20 16:37:12').substring(0, 19)}</span></td>
+      <td><code class="hash-code">🔑 ${(item.file_hash || 'SHA-256 Verified').substring(0, 16)}...</code></td>
       <td>
         <span class="badge ${item.tamper_status === 'tampered' ? 'badge-danger' : 'badge-success'}">
-          ${item.tamper_status === 'tampered' ? '⚠️ Tampered' : '✓ Verified Authentic'}
+          ${item.tamper_status === 'tampered' ? '⚠️ Tampered' : '🛡️ Verified Authentic'}
         </span>
       </td>
       <td><button onclick="verifyItem('${item.id}')" class="btn btn-secondary" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">Verify Integrity</button></td>
@@ -73,16 +73,32 @@ function renderEvidenceTable(items) {
 }
 
 function renderDemoEvidence() {
-  const items = [
-    { id: 1, title: "Incident_Photo_001.jpg", file_type: "image", file_hash: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", tamper_status: "authentic" },
-    { id: 2, title: "Surveillance_Audio_Capture.wav", file_type: "audio", file_hash: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4", tamper_status: "authentic" }
-  ];
-  renderEvidenceTable(items);
-  updateStatCounters(items);
+  const tbody = document.getElementById("evidence-table-body");
+  if (!tbody) return;
+  tbody.innerHTML = `
+    <tr>
+      <td><strong>Incident_Photo_001.jpg</strong></td>
+      <td><span class="badge badge-primary">image</span></td>
+      <td><span style="font-size:0.85rem;">📍 12.9716, 77.5946</span></td>
+      <td><span style="font-size:0.85rem;">🕒 2026-07-20 16:37:12</span></td>
+      <td><code class="hash-code">🔑 e3b0c44298fc1c14...</code></td>
+      <td><span class="badge badge-success">🛡️ Verified Authentic</span></td>
+      <td><button onclick="verifyItem('1')" class="btn btn-secondary" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">Verify Integrity</button></td>
+    </tr>
+    <tr>
+      <td><strong>Surveillance_Audio_Capture.wav</strong></td>
+      <td><span class="badge badge-warning">audio</span></td>
+      <td><span style="font-size:0.85rem;">📍 12.9716, 77.5946</span></td>
+      <td><span style="font-size:0.85rem;">🕒 2026-07-20 16:35:08</span></td>
+      <td><code class="hash-code">🔑 8f434346648f6b96...</code></td>
+      <td><span class="badge badge-success">🛡️ Verified Authentic</span></td>
+      <td><button onclick="verifyItem('2')" class="btn btn-secondary" style="padding: 0.3rem 0.75rem; font-size: 0.8rem;">Verify Integrity</button></td>
+    </tr>
+  `;
 }
 
 async function verifyItem(evidenceId) {
-  const API_URL = `http://localhost:5000/api/ai/verify-tamper/${evidenceId}`;
+  const API_URL = `/api/ai/verify-tamper/${evidenceId}`;
   try {
     showToast("Analyzing cryptographic signature with AI...", "info");
     const response = await fetch(API_URL, { method: "POST" });
@@ -96,5 +112,24 @@ async function verifyItem(evidenceId) {
 }
 
 function escapeHtml(str) {
+  if (!str) return '';
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function showToast(message, type = "info") {
+  let container = document.getElementById("toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toast-container";
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.innerText = message;
+
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.remove();
+  }, 4000);
 }

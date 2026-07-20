@@ -1,9 +1,10 @@
 /**
  * Auth Login Controller - AI Evidence Protector
+ * Authenticates user credentials via Flask session and redirects to Dashboard
  */
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
-  const API_URL = "http://localhost:5000/api/auth/login";
+  const API_URL = "/api/auth/login";
 
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
@@ -31,21 +32,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
 
         if (response.ok && result.success) {
-          showToast("Login Successful! Redirecting...", "success");
+          showToast("Login Successful! Opening Dashboard...", "success");
           localStorage.setItem("user_token", result.data.token);
           localStorage.setItem("user_id", result.data.user_id);
           localStorage.setItem("username", result.data.username);
-          localStorage.setItem("email", result.data.email);
+          localStorage.setItem("email", result.data.email || email);
 
           setTimeout(() => {
-            window.location.href = "dashboard.html";
-          }, 1000);
+            window.location.href = "/dashboard";
+          }, 800);
         } else {
           showToast(result.error || result.message || "Invalid credentials", "error");
         }
       } catch (err) {
         console.error("Login request failed:", err);
-        showToast("Backend connection failed. Please ensure Flask server is running.", "error");
+        showToast("Authentication server unavailable", "error");
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerText = "Secure Sign In";

@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register Account | AI Evidence Protector</title>
-  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../static/css/style.css">
-  <link rel="stylesheet" href="../static/css/login.css">
+  <title>Sign Up | AI Evidence Protector</title>
+  <link rel="shortcut icon" href="{{ url_for('views.favicon') }}" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar">
-    <a href="index.html" class="nav-brand">
-      <img src="../public/logo.png" alt="AI Evidence Logo">
+    <a href="{{ url_for('views.index') }}" class="nav-brand">
+      <img src="{{ url_for('views.logo') }}" alt="AI Evidence Logo">
       <span>AI Evidence Protector</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="login.html" class="nav-link">Login</a></li>
-      <li><a href="emergency.html" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
+      <li><a href="{{ url_for('views.index') }}" class="nav-link">Home</a></li>
+      <li><a href="{{ url_for('views.dashboard') }}" class="nav-link">Dashboard</a></li>
+      <li><a href="{{ url_for('views.login') }}" class="nav-link btn btn-secondary" style="padding:0.4rem 1rem;">Login</a></li>
+      <li><a href="{{ url_for('views.register') }}" class="nav-link active btn btn-primary" style="padding:0.4rem 1rem; color: #0a0d14;">Sign Up</a></li>
+      <li><a href="{{ url_for('views.emergency') }}" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
     </ul>
   </nav>
 
@@ -27,7 +29,7 @@
   <div class="auth-wrapper">
     <div class="glass-card auth-card">
       <div class="auth-header">
-        <img src="../public/logo.png" alt="Logo">
+        <img src="{{ url_for('views.logo') }}" alt="Logo">
         <h2>Create Security Account</h2>
         <p>Set up encrypted storage & emergency SOS alerts</p>
       </div>
@@ -59,16 +61,16 @@
         </div>
 
         <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-          Register Account
+          Sign Up Account
         </button>
       </form>
 
       <div class="auth-footer">
-        Already have an account? <a href="login.html">Sign In</a>
+        Already have an account? <a href="{{ url_for('views.login') }}">Sign In (Login)</a>
       </div>
     </div>
   </div>
 
-  <script src="../static/js/register.js"></script>
+  <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 </body>
 </html>

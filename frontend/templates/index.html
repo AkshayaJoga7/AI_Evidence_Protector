@@ -5,25 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Evidence Protector | Secure Cryptographic Evidence Vault</title>
   <meta name="description" content="AI-powered tamper detection, cryptographic hash integrity, and instant emergency SOS protection for digital evidence.">
-  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="shortcut icon" href="{{ url_for('views.favicon') }}" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar">
-    <a href="index.html" class="nav-brand">
-      <img src="../public/logo.png" alt="AI Evidence Logo">
+    <a href="{{ url_for('views.index') }}" class="nav-brand">
+      <img src="{{ url_for('views.logo') }}" alt="AI Evidence Logo">
       <span>AI Evidence Protector</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html" class="nav-link active">Home</a></li>
-      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
-      <li><a href="evidence.html" class="nav-link">Evidence Vault</a></li>
-      <li><a href="report.html" class="nav-link">Reports</a></li>
-      <li><a href="about.html" class="nav-link">About</a></li>
-      <li><a href="login.html" class="nav-link btn btn-secondary" style="padding:0.4rem 1rem;">Login</a></li>
-      <li><a href="emergency.html" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
+      <li><a href="{{ url_for('views.index') }}" class="nav-link active">Home</a></li>
+      <li><a href="#features" class="nav-link">Features</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="{{ url_for('views.emergency') }}" class="nav-link sos-btn">🚨 SOS PANIC</a></li>
     </ul>
   </nav>
 
@@ -39,13 +41,14 @@
         Securely capture photo, audio, and location metadata with instant SHA-256 digital signatures, AI verification, and emergency dispatch alerts.
       </p>
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="register.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.9rem 2rem;">Get Started Free</a>
-        <a href="emergency.html" class="btn btn-danger" style="font-size: 1.1rem; padding: 0.9rem 2rem;">🚨 Instant SOS Trigger</a>
+        <a href="{{ url_for('views.register') }}" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.9rem 2rem;">Sign Up (Create Account)</a>
+        <a href="{{ url_for('views.login') }}" class="btn btn-secondary" style="font-size: 1.1rem; padding: 0.9rem 2rem;">Sign In (Login)</a>
+        <a href="{{ url_for('views.emergency') }}" class="btn btn-danger" style="font-size: 1.1rem; padding: 0.9rem 2rem;">🚨 Instant SOS Trigger</a>
       </div>
     </section>
 
     <!-- Key Features Grid -->
-    <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+    <section id="features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
       <div class="glass-card">
         <div style="font-size: 2rem; margin-bottom: 1rem;">🛡️</div>
         <h3 style="margin-bottom: 0.5rem;">SHA-256 Digital Signatures</h3>
@@ -62,6 +65,38 @@
         <div style="font-size: 2rem; margin-bottom: 1rem;">📍</div>
         <h3 style="margin-bottom: 0.5rem;">GPS & Emergency SOS</h3>
         <p style="color: var(--text-muted); font-size: 0.95rem;">One-touch panic button captures live GPS geolocation and dispatches distress alerts instantly to emergency contacts.</p>
+      </div>
+    </section>
+
+    <!-- About Section Integrated at Bottom -->
+    <section id="about" class="glass-card" style="padding: 3rem 2.5rem; margin-bottom: 3rem; background: rgba(18, 24, 36, 0.85);">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <img src="{{ url_for('views.logo') }}" alt="Logo" style="height: 54px; width: 54px; margin-bottom: 0.75rem;">
+        <h2>About AI Evidence Protector</h2>
+        <p style="color: var(--text-muted); font-size: 1rem;">Next-Generation Cryptographic & AI Digital Evidence Custody</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+        <div>
+          <h3 style="color: var(--color-primary); margin-bottom: 0.75rem; font-size: 1.25rem;">🛡️ The Mission</h3>
+          <p style="color: var(--text-muted); line-height: 1.7; font-size: 0.95rem;">
+            AI Evidence Protector is engineered to protect citizens, whistleblowers, security personnel, and legal professionals by guaranteeing that recorded media remains tamper-evident, verifiable, and legally binding.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="color: var(--color-primary); margin-bottom: 0.75rem; font-size: 1.25rem;">🔐 Cryptographic Chain of Custody</h3>
+          <p style="color: var(--text-muted); line-height: 1.7; font-size: 0.95rem;">
+            When an image or audio clip is captured or uploaded, the system immediately computes a SHA-256 hash digest. Any attempt to modify even a single pixel or audio frame completely alters the hash, immediately flagging tamper alerts.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="color: var(--color-primary); margin-bottom: 0.75rem; font-size: 1.25rem;">🤖 Neural AI Verification</h3>
+          <p style="color: var(--text-muted); line-height: 1.7; font-size: 0.95rem;">
+            Integrated artificial intelligence models analyze file structures, metadata headers, frequency domains, and compression artifacts to detect synthetic manipulation, deepfakes, or unauthorized splicing.
+          </p>
+        </div>
       </div>
     </section>
   </main>

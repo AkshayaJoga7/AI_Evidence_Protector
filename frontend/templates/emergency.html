@@ -4,22 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emergency SOS | AI Evidence Protector</title>
-  <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../static/css/style.css">
-  <link rel="stylesheet" href="../static/css/emergency.css">
+  <link rel="shortcut icon" href="{{ url_for('views.favicon') }}" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/emergency.css') }}">
 </head>
 <body>
 
-  <!-- Navbar -->
+  <!-- Consistent Authenticated Navbar -->
   <nav class="navbar">
-    <a href="index.html" class="nav-brand">
-      <img src="../public/logo.png" alt="AI Evidence Logo">
+    <a href="{{ url_for('views.index') }}" class="nav-brand">
+      <img src="{{ url_for('views.logo') }}" alt="AI Evidence Logo">
       <span>AI Evidence Protector</span>
     </a>
     <ul class="nav-links">
-      <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
-      <li><a href="evidence.html" class="nav-link">Evidence Vault</a></li>
-      <li><a href="emergency.html" class="nav-link active sos-btn">🚨 SOS PANIC</a></li>
+      <li><a href="{{ url_for('views.dashboard') }}" class="nav-link">Dashboard</a></li>
+      <li><a href="{{ url_for('views.evidence') }}" class="nav-link">Evidence Vault</a></li>
+      <li><a href="{{ url_for('views.report') }}" class="nav-link">Reports</a></li>
+      <li><a href="{{ url_for('views.profile') }}" class="nav-link">Profile</a></li>
+      <li><a href="{{ url_for('views.emergency') }}" class="nav-link active sos-btn">🚨 SOS PANIC</a></li>
     </ul>
   </nav>
 
@@ -46,7 +48,7 @@
     </div>
   </main>
 
-  <script src="../static/js/location.js"></script>
-  <script src="../static/js/emergency.js"></script>
+  <script src="{{ url_for('static', filename='js/location.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/emergency.js') }}"></script>
 </body>
 </html>

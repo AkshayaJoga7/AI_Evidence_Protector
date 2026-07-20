@@ -1,13 +1,11 @@
 /**
  * Emergency SOS Controller - AI Evidence Protector
- * Broadcasts immediate SOS distress signals with real-time GPS location
  */
 document.addEventListener("DOMContentLoaded", () => {
   const sosBtn = document.getElementById("sos-trigger-btn");
   const statusDisplay = document.getElementById("location-display");
-  const API_URL = "http://localhost:5000/api/emergency/trigger";
+  const API_URL = "/api/emergency/trigger";
 
-  // Fetch location on page load
   if (window.LocationService) {
     LocationService.getCurrentLocation()
       .then(coords => {
