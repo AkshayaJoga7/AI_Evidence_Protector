@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,9 +14,13 @@
       gap: 1.5rem;
       margin-bottom: 2rem;
     }
+
     @media (max-width: 768px) {
-      .capture-grid { grid-template-columns: 1fr; }
+      .capture-grid {
+        grid-template-columns: 1fr;
+      }
     }
+
     .video-preview {
       width: 100%;
       height: 220px;
@@ -60,6 +65,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Consistent Authenticated Navbar -->
@@ -80,8 +86,14 @@
   <!-- Main Evidence Container -->
   <main class="main-container">
     <div style="margin-bottom: 2rem;">
+<<<<<<< HEAD
+      <h2>Evidence Capture & Secure Upload Vault</h2>
+      <p style="color: var(--text-muted);">Capture camera snapshots or audio recordings directly, or upload evidence
+        files for SHA-256 signature hashing.</p>
+=======
       <h2>Evidence Capture & Cryptographic Vault</h2>
       <p style="color: var(--text-muted);">Real-time capture of Media, 📍 Exact Item Location (Click Map), 🕒 Present Timestamps, 🔑 SHA-256 Hashes & 🛡️ Tamper Status.</p>
+>>>>>>> 74e2ea012718fb80211ed4dc63f623b93a2444ae
     </div>
 
     <!-- Live Media Capture Cards -->
@@ -107,10 +119,18 @@
 
       <!-- Audio Recorder Card -->
       <div class="glass-card">
+<<<<<<< HEAD
+        <h3 style="margin-bottom: 1rem;">🎙️ Microphone Audio Capture</h3>
+        <div
+          style="height: 240px; background: rgba(10, 13, 20, 0.6); border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+          <div id="audio-status" style="font-size: 1.1rem; color: var(--color-primary);">Microphone Standby</div>
+          <audio id="audio-preview" controls style="display: none; width: 80%;"></audio>
+=======
         <h3 style="margin-bottom: 0.75rem;">🎙️ Microphone Audio Capture</h3>
         <div style="height: 220px; background: rgba(10, 13, 20, 0.6); border-radius: var(--radius-md); border: 1px solid var(--glass-border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem;">
           <div id="audio-status" style="font-size: 1.1rem; color: var(--color-primary); font-weight: 600;">Microphone Standby</div>
           <audio id="audio-preview" controls style="display: none; width: 85%;"></audio>
+>>>>>>> 74e2ea012718fb80211ed4dc63f623b93a2444ae
         </div>
 
         <!-- Metadata Indicator Bar -->
@@ -539,4 +559,5 @@
     }
   </script>
 </body>
+
 </html>
